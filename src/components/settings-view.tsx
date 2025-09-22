@@ -23,9 +23,9 @@ import { Textarea } from "./ui/textarea";
 
 const languages = [
   { value: "en", label: "English" },
-  { value: "hi", label: "हिन्दी (Coming Soon)", disabled: true },
-  { value: "bn", label: "বাংলা (Coming Soon)", disabled: true },
-  { value: "te", label: "తెలుగు (Coming Soon)", disabled: true },
+  { value: "hi", label: "हिन्दी" },
+  { value: "bn", label: "বাংলা" },
+  { value: "te", label: "తెలుగు" },
 ];
 
 export function SettingsView() {
@@ -77,7 +77,7 @@ export function SettingsView() {
               </SelectTrigger>
               <SelectContent>
                 {languages.map((lang) => (
-                  <SelectItem key={lang.value} value={lang.value} disabled={lang.disabled}>
+                  <SelectItem key={lang.value} value={lang.value}>
                     {lang.label}
                   </SelectItem>
                 ))}

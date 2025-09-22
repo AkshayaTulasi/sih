@@ -58,6 +58,9 @@ const answerQuestionFlow = ai.defineFlow(
   },
   async input => {
     const {output} = await prompt(input);
-    return output!;
+    if (!output) {
+      return { answer: "Sorry, I couldn't come up with an answer for that." };
+    }
+    return output;
   }
 );

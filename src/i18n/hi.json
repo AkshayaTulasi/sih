@@ -6,7 +6,7 @@
   "welcomeToAgriAssist": "एग्रीअसिस्ट में आपका स्वागत है",
   "welcomeMessage": "आपका ऑल-इन-वन खेती साथी। आज की स्थितियों पर एक नज़र डालें।",
   "todaysWeather": "आज का मौसम",
-  "weatherLocation": "पंजाब, भारत। यह मॉक डेटा है।",
+  "weatherLocation": "वर्तमान स्थान। यह मॉक मौसम डेटा है।",
   "sunny": "धूप",
   "feelsLike": "महसूस होता है",
   "weeklyForecast": "साप्ताहिक पूर्वानुमान",
@@ -103,5 +103,10 @@
   "youSaid": "आपने कहा",
   "aiResponse": "एआई प्रतिक्रिया",
   "microphoneAccessDenied": "माइक्रोफ़ोन एक्सेस अस्वीकृत",
-  "microphoneAccessDeniedDescription": "आवाज सहायक का उपयोग करने के लिए कृपया अपनी ब्राउज़र सेटिंग्स में माइक्रोफ़ोन एक्सेस सक्षम करें।"
+  "microphoneAccessDeniedDescription": "आवाज सहायक का उपयोग करने के लिए कृपया अपनी ब्राउज़र सेटिंग्स में माइक्रोफ़ोन एक्सेस सक्षम करें।",
+  "fetchingLocation": "स्थान प्राप्त किया जा रहा है...",
+  "locationFetchError": "स्थान प्राप्त नहीं किया जा सका।",
+  "locationAccessDenied": "स्थान एक्सेस अस्वीकृत।",
+  "geolocationNotSupported": "यह ब्राउज़र जियोलोकेशन का समर्थन नहीं करता है।",
+  "weatherError": "मौसम त्रुटि"
 }

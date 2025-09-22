@@ -6,7 +6,7 @@
   "welcomeToAgriAssist": "Welcome to AgriAssist",
   "welcomeMessage": "Your all-in-one farming companion. Here's a look at today's conditions.",
   "todaysWeather": "Today's Weather",
-  "weatherLocation": "Punjab, India. This is mock data.",
+  "weatherLocation": "Current Location. This is mock weather data.",
   "sunny": "Sunny",
   "feelsLike": "Feels like",
   "weeklyForecast": "Weekly Forecast",
@@ -103,5 +103,10 @@
   "youSaid": "You said",
   "aiResponse": "AI Response",
   "microphoneAccessDenied": "Microphone Access Denied",
-  "microphoneAccessDeniedDescription": "Please enable microphone access in your browser settings to use the voice assistant."
+  "microphoneAccessDeniedDescription": "Please enable microphone access in your browser settings to use the voice assistant.",
+  "fetchingLocation": "Fetching location...",
+  "locationFetchError": "Could not fetch location.",
+  "locationAccessDenied": "Location access denied.",
+  "geolocationNotSupported": "Geolocation is not supported by this browser.",
+  "weatherError": "Weather Error"
 }

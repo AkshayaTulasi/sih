@@ -6,7 +6,7 @@
   "welcomeToAgriAssist": "এগ্রিঅ্যাসিস্ট-এ স্বাগতম",
   "welcomeMessage": "আপনার অল-ইন-ওয়ান কৃষি সঙ্গী। আজকের অবস্থার দিকে একবার নজর দিন।",
   "todaysWeather": "আজকের আবহাওয়া",
-  "weatherLocation": "পাঞ্জাব, ভারত। এটি মক ডেটা।",
+  "weatherLocation": "বর্তমান অবস্থান। এটি মক আবহাওয়ার ডেটা।",
   "sunny": "রৌদ্রোজ্জ্বল",
   "feelsLike": "অনুভব হচ্ছে",
   "weeklyForecast": "সাপ্তাহিক পূর্বাভাস",
@@ -45,7 +45,7 @@
   "intermediate": "মধ্যবর্তী",
   "expert": "বিশেষজ্ঞ",
   "cropPreferences": "শস্য পছন্দ (ঐচ্ছিক)",
-  "cropPreferencesPlaceholder": "যেমন, অর্থকরী ফসল, সবজি বা ফলের প্রতি আগ্রহী।",
+  "cropPreferencesPlaceholder": "যেমন, অর্থকরী ফসল, সবজি বা ফলের प्रति আগ্রহী।",
   "getRecommendation": "সুপারিশ পান",
   "recommendation": "সুপারিশ",
   "reasoning": "যুক্তি",
@@ -103,5 +103,10 @@
   "youSaid": "আপনি বলেছেন",
   "aiResponse": "এআই প্রতিক্রিয়া",
   "microphoneAccessDenied": "মাইক্রোফোন অ্যাক্সেস অস্বীকার করা হয়েছে",
-  "microphoneAccessDeniedDescription": "ভয়েস সহকারী ব্যবহার করতে আপনার ব্রাউজার সেটিংসে মাইক্রোফোন অ্যাক্সেস সক্ষম করুন।"
+  "microphoneAccessDeniedDescription": "ভয়েস সহকারী ব্যবহার করতে আপনার ব্রাউজার সেটিংসে মাইক্রোফোন অ্যাক্সেস সক্ষম করুন।",
+  "fetchingLocation": "অবস্থান আনা হচ্ছে...",
+  "locationFetchError": "অবস্থান আনা যায়নি।",
+  "locationAccessDenied": "অবস্থান অ্যাক্সেস অস্বীকার করা হয়েছে।",
+  "geolocationNotSupported": "এই ব্রাউজারটি জিওলোকেশন সমর্থন করে না।",
+  "weatherError": "আবহাওয়ার ত্রুটি"
 }

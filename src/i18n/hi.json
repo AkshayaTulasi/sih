@@ -18,7 +18,7 @@
   "sun": "रवि",
   "mon": "सोम",
   "marketPrices": "बाजार मूल्य (प्रति क्विंटल)",
-  "marketPricesDescription": "विभिन्न बाजारों से लाइव मूल्य। यह मॉक डेटा है।",
+  "marketPricesDescription": "आपके स्थान के पास के बाजारों से नकली कीमतें।",
   "crop": "फसल",
   "price": "कीमत",
   "change": "बदलाव",
@@ -111,5 +111,7 @@
   "locationAccessDenied": "स्थान एक्सेस अस्वीकृत।",
   "geolocationNotSupported": "यह ब्राउज़र जियोलोकेशन का समर्थन नहीं करता है।",
   "weatherError": "मौसम त्रुटि",
-  "weatherFetchError": "मौसम डेटा प्राप्त नहीं किया जा सका। कृपया अपनी एपीआई कुंजी जांचें।"
+  "weatherFetchError": "मौसम डेटा प्राप्त नहीं किया जा सका। कृपया अपनी एपीआई कुंजी जांचें।",
+  "marketDataFetchError": "बाजार डेटा प्राप्त नहीं किया जा सका।",
+  "marketDataError": "बाजार डेटा त्रुटि"
 }

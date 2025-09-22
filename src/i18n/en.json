@@ -18,7 +18,7 @@
   "sun": "Sun",
   "mon": "Mon",
   "marketPrices": "Market Prices (per Quintal)",
-  "marketPricesDescription": "Live prices from various markets. This is mock data.",
+  "marketPricesDescription": "Simulated prices from markets near your location.",
   "crop": "Crop",
   "price": "Price",
   "change": "Change",
@@ -111,5 +111,7 @@
   "locationAccessDenied": "Location access denied.",
   "geolocationNotSupported": "Geolocation is not supported by this browser.",
   "weatherError": "Weather Error",
-  "weatherFetchError": "Could not fetch weather data. Please check your API key."
+  "weatherFetchError": "Could not fetch weather data. Please check your API key.",
+  "marketDataFetchError": "Could not fetch market data.",
+  "marketDataError": "Market Data Error"
 }

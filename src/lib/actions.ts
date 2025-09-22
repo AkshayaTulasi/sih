@@ -14,6 +14,7 @@ import { getFertilizerRecommendation as getFertilizerRecommendationFlow, type Ge
 import { answerQuestion as answerQuestionFlow, type AnswerQuestionInput, type AnswerQuestionOutput } from "@/ai/flows/answer-question";
 import { convertTextToSpeech as convertTextToSpeechFlow, type ConvertTextToSpeechInput, type ConvertTextToSpeechOutput } from "@/ai/flows/convert-text-to-speech";
 import { getWeatherData, type GetWeatherDataInput, type GetWeatherDataOutput } from "@/ai/flows/get-weather-data";
+import { getMarketPrices as getMarketPricesFlow, type GetMarketPricesInput, type GetMarketPricesOutput } from "@/ai/flows/get-market-prices";
 import { z } from "zod";
 
 const cropRecommendationActionSchema = z.object({
@@ -166,5 +167,31 @@ export async function fetchWeatherData(input: GetWeatherDataInput): Promise<{
             return { success: false, error: e.message };
         }
         return { success: false, error: "Failed to fetch weather data." };
+    }
+}
+
+const getMarketPricesActionSchema = z.object({
+    latitude: z.number(),
+    longitude: z.number(),
+    language: z.string().optional(),
+});
+
+export async function getMarketPrices(input: GetMarketPricesInput): Promise<{
+    success: boolean;
+    data?: GetMarketPricesOutput;
+    error?: string;
+}> {
+    const parsed = getMarketPricesActionSchema.safeParse(input);
+    if (!parsed.success) {
+        return { success: false, error: "Invalid input." };
+    }
+    try {
+        const result = await getMarketPricesFlow(parsed.data);
+        return { success: true, data: result };
+    } catch (e) {
+        if (e instanceof Error) {
+            return { success: false, error: e.message };
+        }
+        return { success: false, error: "Failed to fetch market prices." };
     }
 }

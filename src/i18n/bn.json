@@ -15,6 +15,8 @@
   "thu": "বৃহস্পতি",
   "fri": "শুক্র",
   "sat": "শনি",
+  "sun": "রবি",
+  "mon": "সোম",
   "marketPrices": "বাজারের দর (প্রতি কুইন্টাল)",
   "marketPricesDescription": "বিভিন্ন বাজার থেকে লাইভ দর। এটি মক ডেটা।",
   "crop": "শস্য",
@@ -108,5 +110,6 @@
   "locationFetchError": "অবস্থান আনা যায়নি।",
   "locationAccessDenied": "অবস্থান অ্যাক্সেস অস্বীকার করা হয়েছে।",
   "geolocationNotSupported": "এই ব্রাউজারটি জিওলোকেশন সমর্থন করে না।",
-  "weatherError": "আবহাওয়ার ত্রুটি"
+  "weatherError": "আবহাওয়ার ত্রুটি",
+  "weatherFetchError": "আবহাওয়ার ডেটা আনা যায়নি। অনুগ্রহ করে আপনার API কী পরীক্ষা করুন।"
 }

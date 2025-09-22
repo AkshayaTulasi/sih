@@ -1,0 +1,156 @@
+"use client";
+
+import { Camera, Loader, Send, Sprout } from "lucide-react";
+import Image from "next/image";
+import { useState } from "react";
+
+import type { DetectPestAndGiveAdviceOutput } from "@/ai/flows/detect-pest-and-give-advice";
+import { getPestAnalysis } from "@/lib/actions";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useToast } from "@/hooks/use-toast";
+import { Skeleton } from "./ui/skeleton";
+
+export function PestDetection() {
+  const [loading, setLoading] =useState(false);
+  const [result, setResult] = useState<DetectPestAndGiveAdviceOutput | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [file, setFile] = useState<File | null>(null);
+  const { toast } = useToast();
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0];
+    if (selectedFile) {
+      setFile(selectedFile);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(selectedFile);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!file || !imagePreview) {
+      toast({
+        variant: "destructive",
+        title: "No image selected",
+        description: "Please upload an image of the affected plant.",
+      });
+      return;
+    }
+
+    setLoading(true);
+    setResult(null);
+
+    const res = await getPestAnalysis({ photoDataUri: imagePreview });
+
+    if (res.success && res.data) {
+      setResult(res.data);
+    } else {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: res.error || "Failed to analyze the image.",
+      });
+    }
+
+    setLoading(false);
+  };
+
+  return (
+    <div className="max-w-4xl mx-auto space-y-8">
+      <div className="text-center">
+        <h1 className="text-3xl font-bold tracking-tight md:text-4xl font-headline">
+          Pest & Disease Detection
+        </h1>
+        <p className="mt-2 text-muted-foreground">
+          Upload a photo of an affected plant to get an AI-powered diagnosis and
+          advice.
+        </p>
+      </div>
+
+      <Card>
+        <CardContent className="p-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="space-y-2">
+              <Label htmlFor="plant-image">Upload Plant Image</Label>
+              <Input
+                id="plant-image"
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                className="file:text-primary file:font-bold"
+              />
+              <CardDescription>
+                For best results, use a clear image of the affected area.
+              </CardDescription>
+            </div>
+
+            {imagePreview && (
+              <div className="relative w-full overflow-hidden border-2 rounded-lg aspect-video border-dashed">
+                <Image
+                  src={imagePreview}
+                  alt="Plant preview"
+                  fill
+                  className="object-contain"
+                  data-ai-hint="plant disease"
+                />
+              </div>
+            )}
+
+            <Button type="submit" disabled={loading || !file} className="w-full md:w-auto bg-accent text-accent-foreground hover:bg-accent/90">
+              {loading ? (
+                <Loader className="animate-spin" />
+              ) : (
+                <Camera />
+              )}
+              Analyze Image
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
+
+      {loading && (
+        <Card>
+          <CardHeader>
+            <CardTitle>
+              <Skeleton className="w-1/3 h-8" />
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <Skeleton className="w-full h-6" />
+            <Skeleton className="w-full h-6" />
+            <Skeleton className="w-2/3 h-6" />
+          </CardContent>
+        </Card>
+      )}
+
+      {result && (
+        <Card className="animate-in fade-in">
+          <CardHeader>
+            <CardTitle className="text-primary flex items-center gap-2">
+              <Sprout />
+              Diagnosis: {result.pestOrDisease}
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <h3 className="mb-2 font-semibold">Treatment Advice:</h3>
+            <p className="text-muted-foreground whitespace-pre-wrap">
+              {result.advice}
+            </p>
+          </CardContent>
+        </Card>
+      )}
+    </div>
+  );
+}

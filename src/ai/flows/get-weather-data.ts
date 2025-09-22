@@ -61,37 +61,74 @@ const getWeatherDataFlow = ai.defineFlow(
             throw new Error('OpenWeatherMap API key is not configured. Please add it to your .env file.');
         }
 
-        const url = `https://api.openweathermap.org/data/3.0/onecall?lat=${latitude}&lon=${longitude}&exclude=minutely,hourly,alerts&appid=${apiKey}&units=metric`;
-
-        const response = await fetch(url);
-        if (!response.ok) {
-            const errorData = await response.json().catch(() => ({ message: 'Failed to fetch weather data.' }));
-            throw new Error(errorData.message || 'Failed to fetch weather data.');
+        // Fetch current weather
+        const currentUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
+        const currentResponse = await fetch(currentUrl);
+        if (!currentResponse.ok) {
+            const errorData = await currentResponse.json().catch(() => ({ message: 'Failed to fetch current weather data.' }));
+            throw new Error(errorData.message || 'Failed to fetch current weather data.');
         }
-        const data = await response.json();
+        const currentData = await currentResponse.json();
 
         const current = {
-            temp: data.current.temp,
-            feels_like: data.current.feels_like,
+            temp: currentData.main.temp,
+            feels_like: currentData.main.feels_like,
             weather: {
-                main: data.current.weather[0].main,
-                description: data.current.weather[0].description,
-                icon: data.current.weather[0].icon,
+                main: currentData.weather[0].main,
+                description: currentData.weather[0].description,
+                icon: currentData.weather[0].icon,
             },
-            wind_speed: data.current.wind_speed,
+            wind_speed: currentData.wind.speed,
         };
 
-        const forecast = data.daily.slice(1, 6).map((day: any) => {
-            return {
-                day: new Date(day.dt * 1000).toLocaleDateString('en-US', { weekday: 'short' }),
-                temp: day.temp.day,
-                weather: {
-                    main: day.weather[0].main,
-                    icon: day.weather[0].icon,
-                },
-            };
+        // Fetch forecast weather
+        const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
+        const forecastResponse = await fetch(forecastUrl);
+        if (!forecastResponse.ok) {
+            const errorData = await forecastResponse.json().catch(() => ({ message: 'Failed to fetch forecast data.' }));
+            throw new Error(errorData.message || 'Failed to fetch forecast data.');
+        }
+        const forecastData = await forecastResponse.json();
+        
+        // Process forecast data to get one entry per day
+        const dailyForecasts: { [key: string]: any } = {};
+        forecastData.list.forEach((item: any) => {
+            const date = new Date(item.dt * 1000).toLocaleDateString('en-US', { weekday: 'short' });
+            if (!dailyForecasts[date] && new Date(item.dt * 1000).getHours() >= 12) {
+                 dailyForecasts[date] = item;
+            }
         });
 
+        // Create a 5-day forecast, starting from tomorrow
+        const forecast: GetWeatherDataOutput['forecast'] = Object.values(dailyForecasts)
+          .slice(0, 5)
+          .map((day: any) => ({
+            day: new Date(day.dt * 1000).toLocaleDateString('en-US', { weekday: 'short' }),
+            temp: day.main.temp,
+            weather: {
+                main: day.weather[0].main,
+                icon: day.weather[0].icon,
+            },
+        }));
+
+        // Fill remaining days if we don't have 5 days yet
+        let dayIndex = 1;
+        while(forecast.length < 5 && dayIndex < forecastData.list.length) {
+            const item = forecastData.list[dayIndex];
+            const day = new Date(item.dt * 1000).toLocaleDateString('en-US', { weekday: 'short' });
+            if (!forecast.find(f => f.day === day)) {
+                 forecast.push({
+                    day: day,
+                    temp: item.main.temp,
+                    weather: {
+                        main: item.weather[0].main,
+                        icon: item.weather[0].icon,
+                    }
+                });
+            }
+            dayIndex++;
+        }
+        
         return { current, forecast };
     }
 );

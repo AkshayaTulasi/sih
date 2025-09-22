@@ -8,8 +8,10 @@ import { DashboardHome } from "@/components/dashboard-home";
 import { PestDetection } from "@/components/pest-detection";
 import { SettingsView } from "@/components/settings-view";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useLanguage } from "@/context/language-context";
 
 export default function Home() {
+  const { t } = useLanguage();
   return (
     <div className="flex flex-col min-h-screen">
       <AppHeader />
@@ -19,19 +21,19 @@ export default function Home() {
             <TabsList className="grid w-full grid-cols-4 h-auto rounded-none bg-background/80 backdrop-blur-sm p-2 md:w-auto md:mx-auto">
               <TabsTrigger value="dashboard">
                 <LayoutDashboard className="w-5 h-5 md:mr-2" />
-                <span className="hidden md:inline">Dashboard</span>
+                <span className="hidden md:inline">{t('dashboard')}</span>
               </TabsTrigger>
               <TabsTrigger value="advisory">
                 <Sprout className="w-5 h-5 md:mr-2" />
-                <span className="hidden md:inline">Crop Advisory</span>
+                <span className="hidden md:inline">{t('cropAdvisory')}</span>
               </TabsTrigger>
               <TabsTrigger value="pest">
                 <Bug className="w-5 h-5 md:mr-2" />
-                <span className="hidden md:inline">Pest Detection</span>
+                <span className="hidden md:inline">{t('pestDetection')}</span>
               </TabsTrigger>
               <TabsTrigger value="settings">
                 <Settings className="w-5 h-5 md:mr-2" />
-                <span className="hidden md:inline">Settings</span>
+                <span className="hidden md:inline">{t('settings')}</span>
               </TabsTrigger>
             </TabsList>
           </div>

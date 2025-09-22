@@ -33,6 +33,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Skeleton } from "./ui/skeleton";
+import { useLanguage } from "@/context/language-context";
 
 export function CropAdvisory() {
   const [loading, setLoading] = useState(false);
@@ -40,6 +41,7 @@ export function CropAdvisory() {
     null
   );
   const { toast } = useToast();
+  const { t } = useLanguage();
 
   const form = useForm<CropRecommendationFormInput>({
     resolver: zodResolver(cropRecommendationSchema),
@@ -75,10 +77,10 @@ export function CropAdvisory() {
     <div className="max-w-4xl mx-auto space-y-8">
       <div className="text-center">
         <h1 className="text-3xl font-bold tracking-tight md:text-4xl font-headline">
-          AI-Powered Crop Advisory
+          {t('aiPoweredCropAdvisory')}
         </h1>
         <p className="mt-2 text-muted-foreground">
-          Fill in the details below to get a personalized crop recommendation.
+          {t('fillInDetailsForRecommendation')}
         </p>
       </div>
 
@@ -92,9 +94,9 @@ export function CropAdvisory() {
                   name="location"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Location</FormLabel>
+                      <FormLabel>{t('location')}</FormLabel>
                       <FormControl>
-                        <Input placeholder="e.g., Punjab, India" {...field} />
+                        <Input placeholder={t('locationPlaceholder')} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -105,9 +107,9 @@ export function CropAdvisory() {
                   name="soilType"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Soil Type</FormLabel>
+                      <FormLabel>{t('soilType')}</FormLabel>
                       <FormControl>
-                        <Input placeholder="e.g., Alluvial, Clay" {...field} />
+                        <Input placeholder={t('soilTypePlaceholder')} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -120,16 +122,15 @@ export function CropAdvisory() {
                 name="weatherConditions"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Current Weather Conditions</FormLabel>
+                    <FormLabel>{t('currentWeatherConditions')}</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="e.g., Hot and humid, 25°C"
+                        placeholder={t('weatherConditionsPlaceholder')}
                         {...field}
                       />
                     </FormControl>
                     <FormDescription>
-                      Describe the current temperature, humidity, and recent
-                      rainfall.
+                      {t('weatherConditionsDescription')}
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -141,22 +142,22 @@ export function CropAdvisory() {
                 name="growingExperience"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Farming Experience</FormLabel>
+                    <FormLabel>{t('farmingExperience')}</FormLabel>
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select your experience level" />
+                          <SelectValue placeholder={t('selectExperienceLevel')} />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="Beginner">Beginner</SelectItem>
+                        <SelectItem value="Beginner">{t('beginner')}</SelectItem>
                         <SelectItem value="Intermediate">
-                          Intermediate
+                          {t('intermediate')}
                         </SelectItem>
-                        <SelectItem value="Expert">Expert</SelectItem>
+                        <SelectItem value="Expert">{t('expert')}</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -168,10 +169,10 @@ export function CropAdvisory() {
                 name="preferences"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Crop Preferences (Optional)</FormLabel>
+                    <FormLabel>{t('cropPreferences')}</FormLabel>
                     <FormControl>
                       <Textarea
-                        placeholder="e.g., Interested in cash crops, vegetables, or fruits."
+                        placeholder={t('cropPreferencesPlaceholder')}
                         {...field}
                       />
                     </FormControl>
@@ -186,7 +187,7 @@ export function CropAdvisory() {
                 ) : (
                   <Send />
                 )}
-                Get Recommendation
+                {t('getRecommendation')}
               </Button>
             </form>
           </Form>
@@ -212,11 +213,11 @@ export function CropAdvisory() {
         <Card className="animate-in fade-in">
           <CardHeader>
             <CardTitle className="text-primary">
-              Recommendation: {result.cropRecommendation}
+              {t('recommendation')}: {result.cropRecommendation}
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <h3 className="mb-2 font-semibold">Reasoning:</h3>
+            <h3 className="mb-2 font-semibold">{t('reasoning')}:</h3>
             <p className="text-muted-foreground whitespace-pre-wrap">
               {result.reasoning}
             </p>

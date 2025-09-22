@@ -3,14 +3,16 @@
 import { Mic, Sprout } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import { useLanguage } from "@/context/language-context";
 
 export function AppHeader() {
   const { toast } = useToast();
+  const { t } = useLanguage();
 
   const handleVoiceClick = () => {
     toast({
-      title: "Voice Support",
-      description: "Voice command functionality is coming soon!",
+      title: t('voiceSupport'),
+      description: t('voiceSupportComingSoon'),
     });
   };
 

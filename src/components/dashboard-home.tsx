@@ -1,15 +1,17 @@
+import { useLanguage } from "@/context/language-context";
 import { MarketWatch } from "./market-watch";
 import { WeatherCard } from "./weather-card";
 
 export function DashboardHome() {
+  const { t } = useLanguage();
   return (
     <div className="space-y-8">
       <div className="text-center">
         <h1 className="text-3xl font-bold tracking-tight md:text-4xl font-headline">
-          Welcome to AgriAssist
+          {t('welcomeToAgriAssist')}
         </h1>
         <p className="mt-2 text-muted-foreground">
-          Your all-in-one farming companion. Here's a look at today's conditions.
+          {t('welcomeMessage')}
         </p>
       </div>
 

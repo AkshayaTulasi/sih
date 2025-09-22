@@ -18,6 +18,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { Skeleton } from "./ui/skeleton";
+import { useLanguage } from "@/context/language-context";
 
 export function PestDetection() {
   const [loading, setLoading] =useState(false);
@@ -25,6 +26,7 @@ export function PestDetection() {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
   const { toast } = useToast();
+  const { t } = useLanguage();
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
@@ -43,8 +45,8 @@ export function PestDetection() {
     if (!file || !imagePreview) {
       toast({
         variant: "destructive",
-        title: "No image selected",
-        description: "Please upload an image of the affected plant.",
+        title: t('noImageSelected'),
+        description: t('noImageSelectedDescription'),
       });
       return;
     }
@@ -71,11 +73,10 @@ export function PestDetection() {
     <div className="max-w-4xl mx-auto space-y-8">
       <div className="text-center">
         <h1 className="text-3xl font-bold tracking-tight md:text-4xl font-headline">
-          Pest & Disease Detection
+          {t('pestAndDiseaseDetection')}
         </h1>
         <p className="mt-2 text-muted-foreground">
-          Upload a photo of an affected plant to get an AI-powered diagnosis and
-          advice.
+          {t('pestAndDiseaseDetectionDescription')}
         </p>
       </div>
 
@@ -83,7 +84,7 @@ export function PestDetection() {
         <CardContent className="p-6">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
-              <Label htmlFor="plant-image">Upload Plant Image</Label>
+              <Label htmlFor="plant-image">{t('uploadPlantImage')}</Label>
               <Input
                 id="plant-image"
                 type="file"
@@ -92,7 +93,7 @@ export function PestDetection() {
                 className="file:text-primary file:font-bold"
               />
               <CardDescription>
-                For best results, use a clear image of the affected area.
+                {t('uploadPlantImageDescription')}
               </CardDescription>
             </div>
 
@@ -114,7 +115,7 @@ export function PestDetection() {
               ) : (
                 <Camera />
               )}
-              Analyze Image
+              {t('analyzeImage')}
             </Button>
           </form>
         </CardContent>
@@ -140,11 +141,11 @@ export function PestDetection() {
           <CardHeader>
             <CardTitle className="text-primary flex items-center gap-2">
               <Sprout />
-              Diagnosis: {result.pestOrDisease}
+              {t('diagnosis')}: {result.pestOrDisease}
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <h3 className="mb-2 font-semibold">Treatment Advice:</h3>
+            <h3 className="mb-2 font-semibold">{t('treatmentAdvice')}:</h3>
             <p className="text-muted-foreground whitespace-pre-wrap">
               {result.advice}
             </p>

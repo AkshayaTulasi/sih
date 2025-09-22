@@ -14,6 +14,7 @@ import {
   Wind,
 } from "lucide-react";
 import { Separator } from "./ui/separator";
+import { useLanguage } from "@/context/language-context";
 
 const forecast = [
   { day: "Tue", icon: <CloudSun className="w-6 h-6 text-yellow-400" />, temp: "29°C" },
@@ -23,12 +24,21 @@ const forecast = [
   { day: "Sat", icon: <Sun className="w-6 h-6 text-orange-400" />, temp: "33°C" },
 ];
 
+const dayMapping: { [key: string]: string } = {
+  "Tue": "tue",
+  "Wed": "wed",
+  "Thu": "thu",
+  "Fri": "fri",
+  "Sat": "sat"
+};
+
 export function WeatherCard() {
+  const { t } = useLanguage();
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Today's Weather</CardTitle>
-        <CardDescription>Punjab, India. This is mock data.</CardDescription>
+        <CardTitle>{t('todaysWeather')}</CardTitle>
+        <CardDescription>{t('weatherLocation')}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="flex items-center justify-between">
@@ -36,13 +46,13 @@ export function WeatherCard() {
             <Sun className="w-16 h-16 text-orange-400" />
             <div>
               <div className="text-5xl font-bold">31°C</div>
-              <div className="text-muted-foreground">Sunny</div>
+              <div className="text-muted-foreground">{t('sunny')}</div>
             </div>
           </div>
           <div className="space-y-2 text-sm text-right">
             <div className="flex items-center justify-end gap-2">
               <Thermometer className="w-4 h-4 text-muted-foreground" />
-              <span>Feels like 34°C</span>
+              <span>{t('feelsLike')} 34°C</span>
             </div>
             <div className="flex items-center justify-end gap-2">
               <Wind className="w-4 h-4 text-muted-foreground" />
@@ -54,11 +64,11 @@ export function WeatherCard() {
         <Separator />
 
         <div>
-          <h4 className="mb-4 font-semibold text-center">Weekly Forecast</h4>
+          <h4 className="mb-4 font-semibold text-center">{t('weeklyForecast')}</h4>
           <div className="flex justify-between">
             {forecast.map((item) => (
               <div key={item.day} className="flex flex-col items-center gap-2">
-                <span className="text-sm font-medium text-muted-foreground">{item.day}</span>
+                <span className="text-sm font-medium text-muted-foreground">{t(dayMapping[item.day])}</span>
                 {item.icon}
                 <span className="font-bold">{item.temp}</span>
               </div>

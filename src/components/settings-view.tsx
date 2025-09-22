@@ -1,7 +1,6 @@
 "use client";
 
 import { Languages, MessageSquare, ThumbsDown, ThumbsUp } from "lucide-react";
-import { useState } from "react";
 import { Button } from "./ui/button";
 import {
   Card,
@@ -20,30 +19,24 @@ import {
 } from "./ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { Textarea } from "./ui/textarea";
-
-const languages = [
-  { value: "en", label: "English" },
-  { value: "hi", label: "हिन्दी" },
-  { value: "bn", label: "বাংলা" },
-  { value: "te", label: "తెలుగు" },
-];
+import { useLanguage } from "@/context/language-context";
 
 export function SettingsView() {
   const { toast } = useToast();
-  const [selectedLanguage, setSelectedLanguage] = useState("en");
+  const { language, setLanguage, t, languages } = useLanguage();
 
   const handleFeedback = (type: "positive" | "negative") => {
     toast({
-      title: "Feedback Submitted",
-      description: `Thank you for your ${type} feedback!`,
+      title: t('feedbackSubmitted'),
+      description: t('feedbackSubmittedDescription', { type: t(type) }),
     });
   };
   
   const handleSuggestionSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     toast({
-      title: "Suggestion Sent",
-      description: "Thank you! We've received your suggestion.",
+      title: t('suggestionSent'),
+      description: t('suggestionSentDescription'),
     });
     (e.target as HTMLFormElement).reset();
   };
@@ -52,10 +45,10 @@ export function SettingsView() {
     <div className="max-w-4xl mx-auto space-y-8">
       <div className="text-center">
         <h1 className="text-3xl font-bold tracking-tight md:text-4xl font-headline">
-          Settings & Feedback
+          {t('settingsAndFeedback')}
         </h1>
         <p className="mt-2 text-muted-foreground">
-          Manage your preferences and help us improve AgriAssist.
+          {t('settingsAndFeedbackDescription')}
         </p>
       </div>
 
@@ -63,15 +56,15 @@ export function SettingsView() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Languages />
-            Language
+            {t('language')}
           </CardTitle>
           <CardDescription>
-            Choose your preferred language for the app.
+            {t('languageDescription')}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="w-full md:w-1/2">
-            <Select value={selectedLanguage} onValueChange={setSelectedLanguage}>
+            <Select value={language} onValueChange={setLanguage}>
               <SelectTrigger>
                 <SelectValue placeholder="Select language" />
               </SelectTrigger>
@@ -91,15 +84,15 @@ export function SettingsView() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <MessageSquare />
-            Feedback
+            {t('feedback')}
           </CardTitle>
           <CardDescription>
-            Let us know if you find this app helpful.
+            {t('feedbackDescription')}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex items-center gap-4">
-            <span>Was this helpful?</span>
+            <span>{t('wasThisHelpful')}</span>
             <Button
               variant="outline"
               size="icon"
@@ -117,14 +110,14 @@ export function SettingsView() {
           </div>
           <form className="space-y-4" onSubmit={handleSuggestionSubmit}>
             <div>
-              <Label htmlFor="suggestion">Have a suggestion?</Label>
+              <Label htmlFor="suggestion">{t('haveASuggestion')}</Label>
               <Textarea
                 id="suggestion"
-                placeholder="Tell us how we can improve..."
+                placeholder={t('suggestionPlaceholder')}
                 className="mt-2"
               />
             </div>
-            <Button type="submit">Send Suggestion</Button>
+            <Button type="submit">{t('sendSuggestion')}</Button>
           </form>
         </CardContent>
       </Card>

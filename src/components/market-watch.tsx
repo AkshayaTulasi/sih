@@ -26,6 +26,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "./ui/badge";
+import { useLanguage } from "@/context/language-context";
 
 type Crop = {
   name: string;
@@ -74,25 +75,26 @@ const marketData: Crop[] = [
 ];
 
 export function MarketWatch() {
+  const { t } = useLanguage();
   return (
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <AreaChart className="w-6 h-6" />
-          Market Prices (per Quintal)
+          {t('marketPrices')}
         </CardTitle>
         <CardDescription>
-          Live prices from various markets. This is mock data.
+          {t('marketPricesDescription')}
         </CardDescription>
       </CardHeader>
       <CardContent>
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Crop</TableHead>
-              <TableHead className="text-right">Price (₹)</TableHead>
-              <TableHead className="text-right">Change</TableHead>
-              <TableHead>Location</TableHead>
+              <TableHead>{t('crop')}</TableHead>
+              <TableHead className="text-right">{t('price')} (₹)</TableHead>
+              <TableHead className="text-right">{t('change')}</TableHead>
+              <TableHead>{t('location')}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -101,7 +103,7 @@ export function MarketWatch() {
                 <TableCell className="font-medium">
                   <div className="flex items-center gap-3">
                     {crop.icon}
-                    <span>{crop.name}</span>
+                    <span>{t(crop.name.toLowerCase().replace(/ \(.+\)/, ''))}</span>
                   </div>
                 </TableCell>
                 <TableCell className="text-right">
@@ -128,7 +130,7 @@ export function MarketWatch() {
                     {crop.change.toFixed(1)}%
                   </Badge>
                 </TableCell>
-                <TableCell>{crop.location}</TableCell>
+                <TableCell>{t(crop.location.toLowerCase().replace(' ', ''))}</TableCell>
               </TableRow>
             ))}
           </TableBody>

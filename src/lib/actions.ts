@@ -10,6 +10,9 @@ import {
   type GenerateCropRecommendationInput,
   type GenerateCropRecommendationOutput,
 } from "@/ai/flows/generate-crop-recommendation";
+import { getFertilizerRecommendation as getFertilizerRecommendationFlow, type GetFertilizerRecommendationInput, type GetFertilizerRecommendationOutput } from "@/ai/flows/get-fertilizer-recommendation";
+import { answerQuestion as answerQuestionFlow, type AnswerQuestionInput, type AnswerQuestionOutput } from "@/ai/flows/answer-question";
+import { convertTextToSpeech as convertTextToSpeechFlow, type ConvertTextToSpeechInput, type ConvertTextToSpeechOutput } from "@/ai/flows/convert-text-to-speech";
 import { z } from "zod";
 
 const cropRecommendationActionSchema = z.object({
@@ -62,4 +65,75 @@ export async function getPestAnalysis(
     console.error(e);
     return { success: false, error: "Failed to analyze image with AI." };
   }
+}
+
+const fertilizerRecommendationActionSchema = z.object({
+    nitrogen: z.number(),
+    phosphorus: z.number(),
+    potassium: z.number(),
+    ph: z.number(),
+    targetCrop: z.string(),
+});
+
+export async function getFertilizerRecommendation(input: GetFertilizerRecommendationInput): Promise<{
+    success: boolean;
+    data?: GetFertilizerRecommendationOutput;
+    error?: string;
+}> {
+    const parsed = fertilizerRecommendationActionSchema.safeParse(input);
+    if (!parsed.success) {
+        return { success: false, error: "Invalid input." };
+    }
+    try {
+        const result = await getFertilizerRecommendationFlow(parsed.data);
+        return { success: true, data: result };
+    } catch (e) {
+        console.error(e);
+        return { success: false, error: "Failed to get recommendation from AI." };
+    }
+}
+
+const answerQuestionActionSchema = z.object({
+  question: z.string(),
+  context: z.string().optional(),
+});
+
+export async function answerQuestion(input: AnswerQuestionInput): Promise<{
+  success: boolean;
+  data?: AnswerQuestionOutput;
+  error?: string;
+}> {
+    const parsed = answerQuestionActionSchema.safeParse(input);
+    if (!parsed.success) {
+        return { success: false, error: "Invalid input." };
+    }
+    try {
+        const result = await answerQuestionFlow(parsed.data);
+        return { success: true, data: result };
+    } catch (e) {
+        console.error(e);
+        return { success: false, error: "Failed to get answer from AI." };
+    }
+}
+
+const convertTextToSpeechActionSchema = z.object({
+  text: z.string(),
+});
+
+export async function convertTextToSpeech(input: ConvertTextToSpeechInput): Promise<{
+  success: boolean;
+  data?: ConvertTextToSpeechOutput;
+  error?: string;
+}> {
+    const parsed = convertTextToSpeechActionSchema.safeParse(input);
+    if (!parsed.success) {
+        return { success: false, error: "Invalid input." };
+    }
+    try {
+        const result = await convertTextToSpeechFlow(parsed.data);
+        return { success: true, data: result };
+    } catch (e) {
+        console.error(e);
+        return { success: false, error: "Failed to convert text to speech." };
+    }
 }

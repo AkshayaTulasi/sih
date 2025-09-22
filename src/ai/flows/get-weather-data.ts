@@ -65,7 +65,8 @@ const getWeatherDataFlow = ai.defineFlow(
 
         const response = await fetch(url);
         if (!response.ok) {
-            throw new Error('Failed to fetch weather data.');
+            const errorData = await response.json().catch(() => ({ message: 'Failed to fetch weather data.' }));
+            throw new Error(errorData.message || 'Failed to fetch weather data.');
         }
         const data = await response.json();
 

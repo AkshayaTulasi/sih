@@ -64,7 +64,7 @@ const dayMapping: { [key: string]: string } = {
 
 
 export function WeatherCard() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [location, setLocation] = useState<{city: string, state: string} | null>(null);
   const [weatherData, setWeatherData] = useState<GetWeatherDataOutput | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -82,7 +82,7 @@ export function WeatherCard() {
             const { city, state } = geoData.address;
             setLocation({ city, state });
 
-            const weatherResponse = await fetchWeatherData({ latitude, longitude });
+            const weatherResponse = await fetchWeatherData({ latitude, longitude, language });
             if (weatherResponse.success && weatherResponse.data) {
               setWeatherData(weatherResponse.data);
             } else {
@@ -108,7 +108,7 @@ export function WeatherCard() {
       setError(t('geolocationNotSupported'));
       setLoading(false);
     }
-  }, [t]);
+  }, [t, language]);
   
   const getWeatherIcon = (iconCode: string, large: boolean = false) => {
     const icon = weatherIconMapping[iconCode] || <Cloud className={`${large ? 'w-16 h-16' : 'w-6 h-6'} text-gray-400`} />;

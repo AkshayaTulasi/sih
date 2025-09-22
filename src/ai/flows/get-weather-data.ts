@@ -9,11 +9,12 @@
  */
 
 import { ai } from '@/ai/genkit';
-import { z } from 'genkit';
+import { z } from 'zod';
 
 const GetWeatherDataInputSchema = z.object({
     latitude: z.number(),
     longitude: z.number(),
+    language: z.string().optional().describe('The language for the weather description. e.g., en, hi, bn, te'),
 });
 
 export type GetWeatherDataInput = z.infer<typeof GetWeatherDataInputSchema>;
@@ -55,14 +56,16 @@ const getWeatherDataFlow = ai.defineFlow(
         inputSchema: GetWeatherDataInputSchema,
         outputSchema: GetWeatherDataOutputSchema,
     },
-    async ({ latitude, longitude }) => {
+    async ({ latitude, longitude, language }) => {
         const apiKey = process.env.OPENWEATHER_API_KEY;
         if (!apiKey || apiKey === "YOUR_OPENWEATHER_API_KEY") {
             throw new Error('OpenWeatherMap API key is not configured. Please add it to your .env file.');
         }
 
+        const langParam = language ? `&lang=${language}` : '';
+
         // Fetch current weather
-        const currentUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
+        const currentUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric${langParam}`;
         const currentResponse = await fetch(currentUrl);
         if (!currentResponse.ok) {
             const errorData = await currentResponse.json().catch(() => ({ message: 'Failed to fetch current weather data.' }));
@@ -82,7 +85,7 @@ const getWeatherDataFlow = ai.defineFlow(
         };
 
         // Fetch forecast weather
-        const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
+        const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric${langParam}`;
         const forecastResponse = await fetch(forecastUrl);
         if (!forecastResponse.ok) {
             const errorData = await forecastResponse.json().catch(() => ({ message: 'Failed to fetch forecast data.' }));

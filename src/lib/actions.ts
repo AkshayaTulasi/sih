@@ -146,6 +146,7 @@ export async function convertTextToSpeech(input: ConvertTextToSpeechInput): Prom
 const getWeatherDataActionSchema = z.object({
     latitude: z.number(),
     longitude: z.number(),
+    language: z.string().optional(),
 });
 
 export async function fetchWeatherData(input: GetWeatherDataInput): Promise<{

@@ -1,6 +1,7 @@
 "use client";
 
 import { Languages, MessageSquare, ThumbsDown, ThumbsUp } from "lucide-react";
+import { useState } from "react";
 import { Button } from "./ui/button";
 import {
   Card,
@@ -20,8 +21,16 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { Textarea } from "./ui/textarea";
 
+const languages = [
+  { value: "en", label: "English" },
+  { value: "hi", label: "हिन्दी (Coming Soon)", disabled: true },
+  { value: "bn", label: "বাংলা (Coming Soon)", disabled: true },
+  { value: "te", label: "తెలుగు (Coming Soon)", disabled: true },
+];
+
 export function SettingsView() {
   const { toast } = useToast();
+  const [selectedLanguage, setSelectedLanguage] = useState("en");
 
   const handleFeedback = (type: "positive" | "negative") => {
     toast({
@@ -62,21 +71,16 @@ export function SettingsView() {
         </CardHeader>
         <CardContent>
           <div className="w-full md:w-1/2">
-            <Select defaultValue="en">
+            <Select value={selectedLanguage} onValueChange={setSelectedLanguage}>
               <SelectTrigger>
                 <SelectValue placeholder="Select language" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="en">English</SelectItem>
-                <SelectItem value="hi" disabled>
-                  हिन्दी (Coming Soon)
-                </SelectItem>
-                <SelectItem value="bn" disabled>
-                  বাংলা (Coming Soon)
-                </SelectItem>
-                <SelectItem value="te" disabled>
-                  తెలుగు (Coming Soon)
-                </SelectItem>
+                {languages.map((lang) => (
+                  <SelectItem key={lang.value} value={lang.value} disabled={lang.disabled}>
+                    {lang.label}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>

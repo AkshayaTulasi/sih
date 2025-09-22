@@ -11,7 +11,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useLanguage } from "@/context/language-context";
 import { SoilHealth } from "@/components/soil-health";
 import { CommunityForum } from "@/components/community-forum";
-import { VoiceAssistance } from "@/components/voice-assistance";
+import { VoiceAssistant } from "@/components/voice-assistance";
 
 export default function Home() {
   const { t } = useLanguage();
@@ -69,7 +69,7 @@ export default function Home() {
             <CommunityForum />
           </TabsContent>
           <TabsContent value="voice" className="p-4 md:p-6 lg:p-8">
-            <VoiceAssistance />
+            <VoiceAssistant />
           </TabsContent>
           <TabsContent value="settings" className="p-4 md:p-6 lg:p-8">
             <SettingsView />

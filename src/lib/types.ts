@@ -35,9 +35,3 @@ export const communityFormSchema = z.object({
 });
 
 export type CommunityFormInput = z.infer<typeof communityFormSchema>;
-
-export const voiceAssistanceSchema = z.object({
-  text: z.string().min(1, "Text cannot be empty."),
-});
-
-export type VoiceAssistanceFormInput = z.infer<typeof voiceAssistanceSchema>;

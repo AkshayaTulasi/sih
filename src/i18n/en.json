@@ -96,10 +96,12 @@
   "noPosts": "No posts yet. Be the first to ask a question!",
   "answer": "Answer",
   "voice": "Voice",
-  "voiceAssistance": "Voice Assistance",
-  "voiceAssistanceDescription": "Use voice to interact with the app. Enter text and have it read aloud.",
-  "textToSpeak": "Text to speak",
-  "textToSpeakPlaceholder": "Enter the text you want to hear...",
-  "speak": "Speak",
-  "audioPlayback": "Audio Playback"
+  "voiceAssistant": "Voice Assistant",
+  "voiceAssistantDescription": "Tap the microphone to ask your question. The AI will listen and respond with a voice.",
+  "tapToSpeak": "Tap the microphone to speak",
+  "listening": "Listening...",
+  "youSaid": "You said",
+  "aiResponse": "AI Response",
+  "microphoneAccessDenied": "Microphone Access Denied",
+  "microphoneAccessDeniedDescription": "Please enable microphone access in your browser settings to use the voice assistant."
 }

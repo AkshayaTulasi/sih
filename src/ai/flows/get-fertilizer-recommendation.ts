@@ -17,6 +17,7 @@ const GetFertilizerRecommendationInputSchema = z.object({
   potassium: z.number().describe('The potassium level in the soil in ppm.'),
   ph: z.number().describe('The pH level of the soil.'),
   targetCrop: z.string().describe('The crop being grown.'),
+  language: z.string().optional().describe('The language to respond in. e.g., en, hi, bn, te')
 });
 
 export type GetFertilizerRecommendationInput = z.infer<typeof GetFertilizerRecommendationInputSchema>;
@@ -41,6 +42,9 @@ const prompt = ai.definePrompt({
     schema: GetFertilizerRecommendationOutputSchema,
   },
   prompt: `You are an expert agricultural advisor specializing in soil health and fertilization.
+  {{#if language}}
+  Your response must be in the following language: {{language}}
+  {{/if}}
 
   Based on the following soil analysis report and target crop, provide a detailed fertilizer recommendation.
 

@@ -16,6 +16,7 @@ const DetectPestAndGiveAdviceInputSchema = z.object({
     .describe(
       "A photo of a plant, as a data URI that must include a MIME type and use Base64 encoding. Expected format: 'data:<mimetype>;base64,<encoded_data>'."
     ),
+  language: z.string().optional().describe('The language to respond in. e.g., en, hi, bn, te')
 });
 export type DetectPestAndGiveAdviceInput = z.infer<typeof DetectPestAndGiveAdviceInputSchema>;
 
@@ -36,6 +37,9 @@ const prompt = ai.definePrompt({
   input: {schema: DetectPestAndGiveAdviceInputSchema},
   output: {schema: DetectPestAndGiveAdviceOutputSchema},
   prompt: `You are an expert in plant diseases and pests. A farmer has uploaded an image of a plant, and you need to identify the pest or disease affecting the plant and provide advice on how to deal with it.
+  {{#if language}}
+  Your response must be in the following language: {{language}}
+  {{/if}}
 
   Analyze the following image and provide your analysis:
   {{media url=photoDataUri}}

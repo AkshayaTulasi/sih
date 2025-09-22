@@ -12,14 +12,15 @@ import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
 const AnswerQuestionInputSchema = z.object({
-  question: z.string().describe('The user\'s question about agriculture.'),
+  question: z.string().describe("The user's question about agriculture."),
   context: z.string().optional().describe('Optional context from previous questions or posts.'),
+  language: z.string().optional().describe('The language to respond in. e.g., en, hi, bn, te')
 });
 
 export type AnswerQuestionInput = z.infer<typeof AnswerQuestionInputSchema>;
 
 const AnswerQuestionOutputSchema = z.object({
-  answer: z.string().describe('A helpful and accurate answer to the user\'s question.'),
+  answer: z.string().describe("A helpful and accurate answer to the user's question."),
 });
 
 export type AnswerQuestionOutput = z.infer<typeof AnswerQuestionOutputSchema>;
@@ -37,6 +38,9 @@ const prompt = ai.definePrompt({
     schema: AnswerQuestionOutputSchema,
   },
   prompt: `You are an AI assistant for a community forum of farmers. Your role is to provide helpful and accurate answers to their questions about agriculture. Be friendly and supportive in your tone.
+  {{#if language}}
+  Your response must be in the following language: {{language}}
+  {{/if}}
 
   A farmer has asked the following question:
   "{{{question}}}"

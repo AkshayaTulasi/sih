@@ -26,7 +26,7 @@ export function PestDetection() {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
   const { toast } = useToast();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
@@ -54,7 +54,7 @@ export function PestDetection() {
     setLoading(true);
     setResult(null);
 
-    const res = await getPestAnalysis({ photoDataUri: imagePreview });
+    const res = await getPestAnalysis({ photoDataUri: imagePreview, language });
 
     if (res.success && res.data) {
       setResult(res.data);

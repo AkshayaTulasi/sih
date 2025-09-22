@@ -41,7 +41,7 @@ export function CropAdvisory() {
     null
   );
   const { toast } = useToast();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const form = useForm<CropRecommendationFormInput>({
     resolver: zodResolver(cropRecommendationSchema),
@@ -58,7 +58,7 @@ export function CropAdvisory() {
     setLoading(true);
     setResult(null);
 
-    const res = await getCropRecommendation(values);
+    const res = await getCropRecommendation({...values, language});
 
     if (res.success && res.data) {
       setResult(res.data);

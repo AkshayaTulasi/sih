@@ -76,13 +76,19 @@ export function VoiceAssistant() {
       });
     }
   }, [language, toast]);
+  
+  useEffect(() => {
+    if (recognitionRef.current) {
+      recognitionRef.current.lang = language;
+    }
+  }, [language]);
 
   const handleSpokenText = async (text: string) => {
     if (!text) return;
     setLoading(true);
     setAiResponse("");
     setAudioSrc(null);
-    const res = await answerQuestion({ question: text });
+    const res = await answerQuestion({ question: text, language });
 
     if (res.success && res.data?.answer) {
       setAiResponse(res.data.answer);

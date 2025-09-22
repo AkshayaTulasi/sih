@@ -37,7 +37,7 @@ export function CommunityForum() {
   const [loading, setLoading] = useState(false);
   const [posts, setPosts] = useState<Post[]>([]);
   const { toast } = useToast();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const form = useForm<CommunityFormInput>({
     resolver: zodResolver(communityFormSchema),
@@ -57,7 +57,7 @@ export function CommunityForum() {
     setPosts([newPost, ...posts]);
     form.reset();
 
-    const res = await answerQuestion({ question: values.question });
+    const res = await answerQuestion({ question: values.question, language });
 
     if (res.success && res.data) {
       setPosts(prevPosts => prevPosts.map(p => p.id === newPost.id ? {...p, answer: res.data!.answer, loading: false} : p));

@@ -32,7 +32,7 @@ export function SoilHealth() {
     null
   );
   const { toast } = useToast();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const form = useForm<SoilHealthFormInput>({
     resolver: zodResolver(soilHealthSchema),
@@ -49,7 +49,7 @@ export function SoilHealth() {
     setLoading(true);
     setResult(null);
 
-    const res = await getFertilizerRecommendation(values);
+    const res = await getFertilizerRecommendation({...values, language});
 
     if (res.success && res.data) {
       setResult(res.data);
@@ -157,7 +157,7 @@ export function SoilHealth() {
                 {t('getFertilizerRecommendation')}
               </Button>
             </form>
-          </Form>
+          </Form>.
         </CardContent>
       </Card>
 

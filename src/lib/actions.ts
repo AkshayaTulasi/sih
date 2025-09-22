@@ -21,6 +21,7 @@ const cropRecommendationActionSchema = z.object({
   weatherConditions: z.string(),
   growingExperience: z.string(),
   preferences: z.string().optional(),
+  language: z.string().optional(),
 });
 
 export async function getCropRecommendation(
@@ -45,6 +46,7 @@ export async function getCropRecommendation(
 
 const pestAnalysisActionSchema = z.object({
   photoDataUri: z.string(),
+  language: z.string().optional(),
 });
 
 export async function getPestAnalysis(
@@ -73,6 +75,7 @@ const fertilizerRecommendationActionSchema = z.object({
     potassium: z.number(),
     ph: z.number(),
     targetCrop: z.string(),
+    language: z.string().optional(),
 });
 
 export async function getFertilizerRecommendation(input: GetFertilizerRecommendationInput): Promise<{
@@ -96,6 +99,7 @@ export async function getFertilizerRecommendation(input: GetFertilizerRecommenda
 const answerQuestionActionSchema = z.object({
   question: z.string(),
   context: z.string().optional(),
+  language: z.string().optional(),
 });
 
 export async function answerQuestion(input: AnswerQuestionInput): Promise<{
